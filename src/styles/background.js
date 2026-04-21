@@ -1,0 +1,1 @@
+export const backgroundImage = `radial-gradient(circle at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 80%),url("/images/first-background.png")`;

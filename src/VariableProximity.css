@@ -1,0 +1,62 @@
+/* ── Variable font: Orbitron (variable version) ── */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+/* Base class applied by the component internally */
+.variable-proximity {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+/* Heading variant — large display titles */
+.vp-heading {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+}
+
+/* Subheading variant — section headings */
+.vp-subheading {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* Accent variant — smaller styled labels */
+.vp-accent {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Screen reader only utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.vp-metallic {
+    background: linear-gradient(180deg,
+            #ffffff 0%,
+            #c8c8d8 40%,
+            #8b93a5 70%,
+            #ffffff 100%);
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    -webkit-text-stroke: 0.6px rgba(255, 255, 255, 0.16);
+    filter:
+        drop-shadow(0 0 10px rgba(255, 255, 255, 0.12)) drop-shadow(0 10px 22px rgba(0, 0, 0, 0.65));
+}

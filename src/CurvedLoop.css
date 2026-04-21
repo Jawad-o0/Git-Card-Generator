@@ -1,0 +1,51 @@
+.curved-loop-jacket {
+    height: auto;
+    min-height: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.curved-loop-svg {
+    user-select: none;
+    width: 100%;
+    overflow: visible;
+    display: block;
+    font-size: 3.5rem;
+    fill: #ffffff;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.curved-marquee-text {
+    fill: transparent;
+    stroke: rgba(192, 26, 243, 0.85);
+    stroke-width: 1.0px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    paint-order: stroke fill;
+    filter: drop-shadow(0 0 10px rgba(192, 26, 243, 0.6));
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .curved-loop-jacket {
+        padding: 0;
+        margin: 0;
+    }
+
+    .curved-loop-svg {
+        font-size: 7rem;
+        /* Larger font size in SVG units to compensate for physical scaling down */
+    }
+
+    .curved-marquee-text {
+        stroke-width: 2.8px;
+        filter: drop-shadow(0 0 6px rgba(192, 26, 243, 0.4));
+    }
+}
