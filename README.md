@@ -1,5 +1,3 @@
-# Create a high-fidelity SVG header with custom purple gradient and professional font
-svg_content = """
 <svg width="800" height="150" viewBox="0 0 800 150" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -74,7 +72,3 @@ The UI utilizes a "Cyber-Premium" design language:
 | **Styling** | Tailwind CSS | Utility-First Custom Configuration |
 | **Animation** | Framer Motion | Orchestrated Layout Transitions |
 | **Rendering** | HTML2Canvas | High-Res Pixel-to-Pixel Export |
-
-## Installation and Deployment
-
-Initialize the local development environment:
