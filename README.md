@@ -27,7 +27,7 @@
 
 ---
 
-## 🔮 Overview
+## ◈ Overview
 
 **Git-Card Studio** is an ultra-premium web application that dynamically transforms raw GitHub data into personalized **Developer Identity Cards**. It serves as a visual resume and statement piece for engineers to showcase their coding personas, dominant languages, and open-source impact — with the aesthetic rigor of a world-class product launch.
 
@@ -35,9 +35,9 @@ The application discards standard flat web design in favor of an aggressive **cy
 
 ---
 
-## ✦ Features
+## ◈ Features
 
-### 🎨 Visual Identity & Aesthetic Engineering
+### ▸ Visual Identity & Aesthetic Engineering
 
 - **Cinematic UI** — Ambient aurora gradients, radial glows, and rotating shimmer borders throughout
 - **Metallic Typography** — Custom `@keyframes` create a living metallic sheen that breathes across headings
@@ -47,7 +47,7 @@ The application discards standard flat web design in favor of an aggressive **cy
 
 ---
 
-### 🧠 Heuristic Analysis Engine
+### ▸ Heuristic Analysis Engine
 
 The core algorithm doesn't just read data — it **interprets** it.
 
@@ -60,7 +60,7 @@ The core algorithm doesn't just read data — it **interprets** it.
 
 ---
 
-### ⚡ Intelligent API Architecture
+### ▸ Intelligent API Architecture
 
 Dual-tier fallback system to bypass GitHub's unauthenticated rate limits:
 
@@ -78,7 +78,7 @@ Power User Mode (PAT Override)
 
 ---
 
-### 📸 Export Pipeline
+### ▸ Export Pipeline
 
 | Export Type | Description |
 |---|---|
@@ -89,7 +89,7 @@ Power User Mode (PAT Override)
 
 ---
 
-### 🎴 Card Customization
+### ▸ Card Customization
 
 - **8 Chromium Themes** — Platinum, Obsidian, Royal Burgundy, Slate, Synthwave, Terminal, Aurora, Gold Foil
 - **9 Art Overlays** — Steel Serpent, Liquid Glass, Royal Baroque, The Operator, Cosmic Drifter, and more
@@ -100,7 +100,7 @@ Power User Mode (PAT Override)
 
 ---
 
-## 🛠 Tech Stack
+## ◈ Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -115,7 +115,7 @@ Power User Mode (PAT Override)
 
 ---
 
-## 🚀 Getting Started
+## ◈ Getting Started
 
 ### Prerequisites
 - Node.js `18+`
@@ -147,7 +147,7 @@ npm run build
 
 ---
 
-## 📁 Project Structure
+## ◈ Project Structure
 
 ```
 src/
@@ -176,7 +176,7 @@ src/
 
 ---
 
-## 🔑 GitHub Token (Optional)
+## ◈ GitHub Token (Optional)
 
 For byte-level language precision and higher rate limits:
 
@@ -188,7 +188,7 @@ Your token is encrypted client-side and never leaves your browser.
 
 ---
 
-## 📄 License
+## ◈ License
 
 This project is open source and available under the [MIT License](LICENSE).
 
