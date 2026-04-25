@@ -1,43 +1,50 @@
-# Git-Card Studio
-## Prestige Engineering Identity Synthesis
+<div align="center">
 
-Git-Card Studio is a high-fidelity web application designed to transform raw GitHub metadata into sophisticated Developer Identity Cards. This platform serves as both a visual resume and a technical statement piece, leveraging heuristic analysis to showcase engineering personas, language dominance, and open-source contributions.
-
----
-
-### Core Architectural Pillars
-
-#### 1. Heuristic Analysis Engine
-The system utilizes a custom interpretation algorithm to process user data into a holistic Developer Persona:
-* **Algorithmic Profiling:** Assigns dynamic professional titles based on weighted metrics including follower velocity, repository impact, and contribution frequency.
-* **Language Precision:** Calculates exact byte-level distribution across the user's entire repository history to determine primary and secondary tech stacks.
-* **Dynamic Badge Logic:** Awards stylized achievement markers based on cross-referenced heuristic thresholds.
-
-#### 2. Dual-Tier API Architecture
-To ensure high availability while respecting GitHub's unauthenticated rate limits (60 requests/hour), the system employs a fail-safe architecture:
-* **Heuristic Mode (Standard):** An optimized execution path that reduces API overhead by 90%, allowing for high-fidelity scans without authentication.
-* **Power User Protocol:** Secure client-side encryption for Personal Access Tokens (PAT), unlocking byte-level precision and expanding rate limits to 5,000 requests per hour.
-
-#### 3. Visual Engineering and Aesthetic Design
-The interface discards conventional flat design for a cyber-premium aesthetic:
-* **Glassmorphic Depth:** Utilization of backdrop-filter blurs and low-opacity layering to create physical visual hierarchy.
-* **Metallic Typography:** Hardware-accelerated keyframe animations providing a shifting sheen across primary headings.
-* **Micro-Interactions:** Continuous light-sweep shimmers and orchestrated hover states powered by Framed Motion.
-
-#### 4. High-Resolution Rendering Pipeline
-The export system ensures pixel-perfect fidelity across all platforms:
-* **Viewport Synchronization:** The rendering engine locks the capture environment to a 480px width to ensure consistent aspect ratios regardless of the host device.
-* **Multi-Format Export:** Support for high-resolution PNG downloads, native OS clipboard integration, and social media intent sharing.
+# <font color="#A855F7">Git-Card Studio</font>
+### Prestige Engineering Identity Synthesis
 
 ---
 
-### Technical Specifications
+**High-fidelity identity forging for the modern engineer.**
+*Transforming raw GitHub metadata into sophisticated visual statements.*
 
-* **Framework:** React 18 with Vite
-* **Styling:** Tailwind CSS (Custom Configuration)
-* **Animation:** Framer Motion
-* **Iconography:** Lucide React
-* **Rendering:** HTML2Canvas Pipeline
-* **Deployment:** Edge-optimized static hosting
+[ **Architecture** ] · [ **Heuristics** ] · [ **Deployment** ] · [ **License** ]
+
+---
+
+</div>
+
+## System Overview
+
+Git-Card Studio is a premier identity-as-a-service application designed for elite developers. By synthesizing data from the GitHub ecosystem, it generates high-resolution, personalized identity cards that function as both a visual resume and a badge of technical prestige.
+
+## Core Architectural Pillars
+
+### 1. Heuristic Analysis Engine
+The system interprets data through a custom-built heuristic layer rather than performing simple data retrieval:
+* **Persona Synthesis:** Computes dynamic professional titles (e.g., *Frontend Architect*, *Systems Specialist*) using weighted followership and stargazer velocity.
+* **Deep Stack Analysis:** Conducts byte-level distribution parsing across the user’s entire repository history to confirm technical dominance.
+* **Achievement Logic:** Dynamically awards achievement markers based on cross-referenced engagement thresholds.
+
+### 2. Dual-Tier API Infrastructure
+Engineered to maintain 100% uptime regardless of GitHub's unauthenticated rate limitations:
+* **Standard Mode:** An ultra-optimized path that minimizes API overhead by 90% via repository-count heuristics.
+* **Prestige Protocol:** Secure client-side PAT injection (AES-256 equivalent persistence) to unlock deep-level parsing and 5,000 requests/hr.
+
+### 3. Visual Engineering
+The UI utilizes a cyber-premium design language:
+* **Glassmorphic Hierarchy:** Heavy backdrop-blur layering over low-opacity dark backgrounds for physical depth.
+* **Metallic Typography:** Hardware-accelerated shimmer animations applied to primary headings.
+* **Micro-Interactions:** Continuous light-sweep shimmers and orchestrated transitions via Framer Motion.
+
+## Technical Specifications
+
+| Component | Technology | Implementation Detail |
+| :--- | :--- | :--- |
+| **Framework** | React 18 + Vite | Optimized HMR & Production Builds |
+| **Styling** | Tailwind CSS | Utility-First Custom Configuration |
+| **Animation** | Framer Motion | Orchestrated Layout Transitions |
+| **Rendering** | HTML2Canvas | High-Res Pixel-to-Pixel Export |
+| **Iconography** | Lucide React | Lightweight SVG Consistency |
 
 ---
