@@ -1,6 +1,6 @@
 <div align="center">
 
-# <font color="#A855F7">Git-Card Studio</font>
+#<font color="#A855F7">Git-Card Studio</font>
 ### Prestige Engineering Identity Synthesis
 
 ---
