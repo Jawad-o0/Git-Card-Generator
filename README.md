@@ -1,4 +1,4 @@
-"""# Git-Card Studio
+# Git-Card Studio
 ## Prestige Engineering Identity Synthesis
 
 Git-Card Studio is a high-fidelity web application designed to transform raw GitHub metadata into sophisticated Developer Identity Cards. This platform serves as both a visual resume and a technical statement piece, leveraging heuristic analysis to showcase engineering personas, language dominance, and open-source contributions.
