@@ -43,16 +43,10 @@ const Navbar = ({ scrolled, scrollProgress, heroRef, toolRef, aboutRef }) => {
         />
         <div className="flex items-center gap-3">
           <div
-            className="h-7 w-7 rounded-lg flex items-center justify-center flex-shrink-0"
-            style={{
-              background: 'linear-gradient(135deg, #2d0050 0%, #7a00d4 60%, #c01af3 100%)',
-              boxShadow: '0 0 16px rgba(192,26,243,0.6)',
-            }}
+            className="h-12 w-12 flex items-center justify-center flex-shrink-0 mix-blend-screen"
+            style={{ filter: 'drop-shadow(0 0 10px rgba(192,26,243,0.6))' }}
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M7 1L13 4.5V9.5L7 13L1 9.5V4.5L7 1Z" stroke="#fff" strokeWidth="1.2" fill="rgba(255,255,255,0.08)" />
-              <circle cx="7" cy="7" r="2" fill="#c01af3" />
-            </svg>
+            <img src="/logo1.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col leading-none">
             <span className="nav-logo-glyph" style={{ lineHeight: 1.1 }} role="heading" aria-level="2">
