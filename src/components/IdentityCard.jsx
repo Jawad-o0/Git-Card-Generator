@@ -145,26 +145,37 @@ const IdentityCardBase = (
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-1.5" aria-label={`User badges: ${personality.badges.map(b => b.title).join(', ')}`}>
+            <div className="flex flex-wrap gap-2" aria-label="User badges">
               {personality.badges.map((badge, i) => (
-                <motion.span
+                <motion.div
                   key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.08 * i, duration: 0.3, ease: 'easeOut' }}
-                  className="inline-flex items-center gap-1 rounded-full text-[9.5px] font-medium px-2.5 py-0.5"
+                  className="flex items-center justify-center rounded-sm px-3"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    border: `2px solid ${currentTheme.accent}70`,
-                    color: 'rgba(12, 1, 1, 1)'
+                    background: 'rgba(0, 255, 150, 0.05)', // Very subtle tint
+                    border: `1px solid ${currentTheme.accent}80`, // Semi-transparent border
+                    height: '22px',
+                    boxShadow: `0 0 10px ${currentTheme.accent}20`, // Subtle outer glow
                   }}
-                  role="note"
                 >
-                  <span className="text-[9px]">{badge.emoji}</span>
-                  {badge.title}
-                </motion.span>
+                  <span
+                    style={{
+                      color: currentTheme.accent,
+                      fontSize: '9px',
+                      fontWeight: '800',
+                      fontFamily: "'Orbitron', sans-serif",
+                      letterSpacing: '0.15em',
+                      textShadow: `0 0 5px ${currentTheme.accent}40`, // Text glow
+                      lineHeight: '1',
+                      // Use a tiny negative margin if the font naturally sits low
+                      transform: 'translateY(-0.5px)',
+                    }}
+                  >
+                    {badge.title}
+                  </span>
+                </motion.div>
               ))}
             </div>
+
 
             <div
               className="flex items-stretch overflow-hidden rounded-xl"
@@ -185,7 +196,7 @@ const IdentityCardBase = (
 
             {personality.topLanguages.length > 0 && (
               <div className="space-y-2" aria-label="Programming languages breakdown">
-                <p className="sr-only">Programming languages usage percentage</p>
+                <p className="font-mono text-[8px] uppercase tracking-[0.3em] font-semibold" style={{ color: 'rgba(255,255,255,0.50)' }}>Top Languages</p>
                 {personality.topLanguages.map((lang, i) => (
                   <div key={i}>
                     <div className="flex items-center justify-between mb-1">
