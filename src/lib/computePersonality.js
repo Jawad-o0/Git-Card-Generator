@@ -17,10 +17,8 @@ export function computePersonality(
   orgs = null
 ) {
 
-  // ─── Stars ───────────────────────────────────────────────────────────────
   const totalStars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
 
-  // ─── Language breakdown ───────────────────────────────────────────────────
   let topLanguages = [];
   let dataAccuracy = 'repo-count';
 
@@ -52,14 +50,12 @@ export function computePersonality(
       }));
   }
 
-  // ─── Account age (years) ──────────────────────────────────────────────────
   const created = new Date(user.created_at);
   const accountAge = Math.max(
     1,
     Math.floor((Date.now() - created) / (365.25 * 24 * 60 * 60 * 1000))
   );
 
-  // ─── Activity profile (from public events) ────────────────────────────────
   let activityProfile = null;
 
   if (Array.isArray(events) && events.length > 0) {
@@ -68,7 +64,7 @@ export function computePersonality(
       e => new Date(e.created_at).getTime() > thirtyDaysAgo
     );
 
-    // Event-type counts
+    
     const typeCounts = {};
     recent.forEach(e => {
       typeCounts[e.type] = (typeCounts[e.type] || 0) + 1;
@@ -81,13 +77,11 @@ export function computePersonality(
     const forkCount = typeCounts['ForkEvent'] || 0;
     const total = recent.length;
 
-    // Most active day of week
     const dayCounts = [0, 0, 0, 0, 0, 0, 0];
     recent.forEach(e => dayCounts[new Date(e.created_at).getDay()]++);
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const mostActiveDay = dayNames[dayCounts.indexOf(Math.max(...dayCounts))];
 
-    // Time since last event
     const lastEventDate = events[0]?.created_at
       ? new Date(events[0].created_at)
       : null;
@@ -95,7 +89,6 @@ export function computePersonality(
       ? Math.floor((Date.now() - lastEventDate.getTime()) / (1000 * 60 * 60))
       : null;
 
-    // Commits extracted from PushEvent payloads
     const totalCommits = events
       .filter(e => e.type === 'PushEvent')
       .reduce((acc, e) => acc + (e.payload?.commits?.length || 0), 0);
@@ -111,37 +104,30 @@ export function computePersonality(
       lastEventDate,
       hoursSinceLastEvent,
       totalCommits,
-      // Percentage splits for the UI bar
+      
       pushPct: total ? Math.round((pushCount / total) * 100) : 0,
       prPct: total ? Math.round((prCount / total) * 100) : 0,
       reviewPct: total ? Math.round((reviewCount / total) * 100) : 0,
     };
   }
 
-  // ─── Org count ────────────────────────────────────────────────────────────
   const orgCount = Array.isArray(orgs) ? orgs.length : 0;
 
-  // ─── Badges ───────────────────────────────────────────────────────────────
   const badges = [];
 
-  // Follower tier
   if (user.followers > 5000) badges.push({ title: 'VISIONARY' });
   else if (user.followers > 1000) badges.push({ title: 'AUTHORITY' });
   else if (user.followers > 100) badges.push({ title: 'HIGH POTENTIAL' });
 
-  // Repo volume
   if (user.public_repos > 50) badges.push({ title: 'INDUSTRIALIST' });
   else if (user.public_repos > 15) badges.push({ title: 'CORE CONTRIBUTOR' });
 
-  // Star power
   if (totalStars > 5000) badges.push({ title: 'TITAN' });
   else if (totalStars > 500) badges.push({ title: 'ELITE' });
 
-  // Longevity
   if (accountAge > 10) badges.push({ title: 'FOUNDING MEMBER' });
   else if (accountAge > 5) badges.push({ title: 'SENIOR ENGINEER' });
 
-  // Activity-derived badges (only available when events were fetched)
   if (activityProfile) {
     if (activityProfile.totalCommits > 200) badges.push({ title: 'ON FIRE' });
     else if (activityProfile.totalCommits > 50) badges.push({ title: 'ACTIVE BUILDER' });
@@ -150,11 +136,9 @@ export function computePersonality(
     if (activityProfile.prCount > 10) badges.push({ title: 'COLLABORATOR' });
   }
 
-  // Network badges
   if (orgCount > 5) badges.push({ title: 'NETWORKED' });
   else if (orgCount > 2) badges.push({ title: 'TEAM PLAYER' });
 
-  // ─── Archetype ────────────────────────────────────────────────────────────
   let archetype = 'EXPLORER';
   if (totalStars > 1000 && user.followers > 500) archetype = 'LUMINARY';
   else if (user.public_repos > 40 && accountAge > 6) archetype = 'ARCHITECT';
@@ -162,7 +146,6 @@ export function computePersonality(
   else if (topLanguages.length > 2) archetype = 'POLYGLOT';
   else if (totalStars > 100) archetype = 'RISING STAR';
 
-  // ─── Return ───────────────────────────────────────────────────────────────
   return {
     badges: badges.length ? badges.slice(0, 4) : [{ title: 'PIONEER' }],
     archetype,
@@ -172,7 +155,7 @@ export function computePersonality(
     totalRepos: user.public_repos,
     accountAge,
     dataAccuracy,
-    activityProfile, // null if events not fetched
-    orgCount,        // 0 if orgs not fetched
+    activityProfile, 
+    orgCount,        
   };
 }
