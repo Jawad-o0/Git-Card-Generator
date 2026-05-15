@@ -5,8 +5,6 @@ import { Github } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import DecryptText from './DecryptText';
 
-
-
 const IdentityCardBase = (
   {
     userData,
@@ -145,37 +143,75 @@ const IdentityCardBase = (
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2" aria-label="User badges">
+            {/*
+              BADGE FIX — root causes addressed:
+
+              Problem 1 — Font not embedded at capture time:
+                html2canvas and html-to-image both need the font to be already
+                loaded and accessible when they rasterize. If Orbitron isn't
+                embedded, the canvas draws with a fallback system font that has
+                different cap-height and descent values — the text appears
+                misaligned even when the padding is perfect.
+                FIX: see the export handler note at the bottom of this file.
+
+              Problem 2 — inline-flex + fixed height:
+                html2canvas has incomplete flex alignment support. A fixed height
+                with flex centering can render the text at y=0 of the container
+                instead of centered. FIX: replaced with a single inline-block
+                div — no nested span, no flex, no transform. All centering is
+                done with symmetric padding, which every canvas renderer handles
+                identically to the browser.
+
+              Problem 3 — nested span baseline shift:
+                An inline span inside a flex container sits on the text baseline
+                by default. The baseline includes descender space below the
+                glyphs, which shifts the visual center upward in the browser
+                but is not accounted for the same way in canvas renderers.
+                FIX: one element, text directly inside, no span nesting.
+            */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }} aria-label="User badges">
               {personality.badges.map((badge, i) => (
-                <motion.div
+                <div
                   key={i}
-                  className="flex items-center justify-center rounded-sm px-3"
                   style={{
-                    background: 'rgba(0, 255, 150, 0.05)', // Very subtle tint
-                    border: `1px solid ${currentTheme.accent}80`, // Semi-transparent border
-                    height: '22px',
-                    boxShadow: `0 0 10px ${currentTheme.accent}20`, // Subtle outer glow
+                    /*
+                      inline-block is the most reliably rendered display value
+                      across every canvas export library.
+                      No flex, no grid, no table — pure block-model sizing.
+                    */
+                    display: 'inline-block',
+                    borderRadius: '2px',
+                    /*
+                      Symmetric vertical padding is the only safe way to
+                      vertically center a single line of text in canvas.
+                      Top and bottom must be equal, and no transform is allowed.
+                      The slight bottom increase (6px vs 5px) compensates for
+                      Orbitron's cap-height being shorter than its em-square,
+                      which otherwise makes the text look 1px high.
+                    */
+                    paddingTop: '6px',
+                    paddingBottom: '5px',
+                    paddingLeft: '10px',
+                    paddingRight: '10px',
+                    background: 'rgba(0, 255, 150, 0.05)',
+                    border: `1px solid ${currentTheme.accent}80`,
+                    boxShadow: `0 0 10px ${currentTheme.accent}20`,
+                    color: currentTheme.accent,
+                    fontSize: '9px',
+                    fontWeight: '800',
+                    fontFamily: "'Orbitron', sans-serif",
+                    letterSpacing: '0.15em',
+                    textShadow: `0 0 5px ${currentTheme.accent}40`,
+                    lineHeight: '1',
+                    whiteSpace: 'nowrap',
                   }}
+                  role="img"
+                  aria-label={`Badge: ${badge.title}`}
                 >
-                  <span
-                    style={{
-                      color: currentTheme.accent,
-                      fontSize: '9px',
-                      fontWeight: '800',
-                      fontFamily: "'Orbitron', sans-serif",
-                      letterSpacing: '0.15em',
-                      textShadow: `0 0 5px ${currentTheme.accent}40`, // Text glow
-                      lineHeight: '1',
-                      // Use a tiny negative margin if the font naturally sits low
-                      transform: 'translateY(-0.5px)',
-                    }}
-                  >
-                    {badge.title}
-                  </span>
-                </motion.div>
+                  {badge.title}
+                </div>
               ))}
             </div>
-
 
             <div
               className="flex items-stretch overflow-hidden rounded-xl"
@@ -201,9 +237,17 @@ const IdentityCardBase = (
                   <div key={i}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-mono text-[10.5px] font-bold" style={{ color: 'rgba(255,255,255,0.85)' }}>{lang.name}</span>
-                      <span className="font-mono text-[10.5px]" style={{ color: 'rgba(255, 255, 255, 0.95)' }}>{lang.percentage}%</span>
+                      <span className="font-mono text-[10.5px]" style={{ color: 'rgba(255,255,255,0.95)' }}>{lang.percentage}%</span>
                     </div>
-                    <div className="h-[2px] rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }} role="progressbar" aria-valuenow={lang.percentage} aria-valuemin="0" aria-valuemax="100" aria-label={`${lang.name}: ${lang.percentage}%`}>
+                    <div
+                      className="h-[2px] rounded-full overflow-hidden"
+                      style={{ background: 'rgba(255,255,255,0.08)' }}
+                      role="progressbar"
+                      aria-valuenow={lang.percentage}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-label={`${lang.name}: ${lang.percentage}%`}
+                    >
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${lang.percentage}%` }}
@@ -230,6 +274,47 @@ const IdentityCardBase = (
     </motion.div>
   );
 };
+
+/*
+  ─── CRITICAL: Font embedding in your export handler ────────────────────────
+  The badge fix above handles the CSS side. But if Orbitron isn't embedded
+  into the canvas context at capture time, none of it matters — the canvas
+  will use a system fallback font with different metrics.
+
+  In whatever function you call to download the card (likely using html2canvas
+  or html-to-image), add font preloading before the capture:
+
+  // With html-to-image:
+  import { toPng } from 'html-to-image';
+
+  const handleDownload = async () => {
+    // Step 1: ensure the font is loaded into the document
+    await document.fonts.load('800 9px Orbitron');
+    await document.fonts.ready;
+
+    // Step 2: THEN capture
+    const dataUrl = await toPng(cardRef.current, {
+      cacheBust: true,
+      pixelRatio: 2,
+      // This tells html-to-image to embed fonts it finds in @font-face rules:
+      includeQueryParams: true,
+    });
+    // ... download logic
+  };
+
+  // With html2canvas:
+  const handleDownload = async () => {
+    await document.fonts.load('800 9px Orbitron');
+    await document.fonts.ready;
+    const canvas = await html2canvas(cardRef.current, {
+      useCORS: true,
+      scale: 2,
+      logging: false,
+    });
+    // ... download logic
+  };
+  ─────────────────────────────────────────────────────────────────────────────
+*/
 
 const IdentityCard = memo(forwardRef(IdentityCardBase));
 export default IdentityCard;
