@@ -50,62 +50,106 @@ const SplineFallback = () => (
 
 const SplineGlobeContainer = ({ splineLoaded, splineError, setSplineLoaded, setSplineError }) => {
   const containerRef = useRef(null);
+  const overlayRef = useRef(null);
   const splineRef = useRef(null);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    // Block ALL wheel events from reaching Spline (stops zoom)
-    const blockWheel = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-    };
-
-    // Block right-click drag (stops pan)
-    const blockContext = (e) => e.preventDefault();
-
-    el.addEventListener('wheel', blockWheel, { passive: false, capture: true });
-    el.addEventListener('contextmenu', blockContext);
-
-    return () => {
-      el.removeEventListener('wheel', blockWheel, { capture: true });
-      el.removeEventListener('contextmenu', blockContext);
-    };
-  }, []);
+  const isDragging = useRef(false);
+  const [showZoomHint, setShowZoomHint] = useState(false);
+  const hintTimeout = useRef(null);
 
   const handleSplineLoad = (splineApp) => {
     splineRef.current = splineApp;
 
-    // Lock camera zoom by setting min and max distance to the same value
     try {
       const camera = splineApp.findObjectByName('Camera');
       if (camera) {
-        // Freeze zoom by clamping distance
-        camera.controls.minDistance = camera.controls.maxDistance = camera.position.length();
-        // Allow only orbit rotation, disable pan
         camera.controls.enablePan = false;
-        camera.controls.enableZoom = false;
       }
-    } catch (err) {
-      // Camera control access not available, wheel block above still helps
-      console.warn('Could not access Spline camera controls:', err);
+    } catch {
+      // camera controls not accessible
     }
 
     setSplineLoaded(true);
   };
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const blockContext = (e) => e.preventDefault();
+
+    // Custom wheel logic for Google-Maps style zoom
+    const handleWheel = (e) => {
+      if (!e.ctrlKey && !e.metaKey) {
+        // Stop the event from reaching Spline (so it doesn't zoom)
+        e.stopPropagation();
+        
+        // Show the hint
+        setShowZoomHint(true);
+        if (hintTimeout.current) clearTimeout(hintTimeout.current);
+        hintTimeout.current = setTimeout(() => setShowZoomHint(false), 2000);
+      } else {
+        // User holds Ctrl/Cmd: prevent page scroll, let event bubble to Spline for zooming
+        e.preventDefault();
+        setShowZoomHint(false);
+      }
+    };
+
+    el.addEventListener('contextmenu', blockContext);
+    // Use capture: false and passive: false (since we might call preventDefault)
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      el.removeEventListener('contextmenu', blockContext);
+      el.removeEventListener('wheel', handleWheel);
+      if (hintTimeout.current) clearTimeout(hintTimeout.current);
+    };
+  }, []);
+
+  const startDrag = (e) => {
+    if (e.button !== 0) return;
+    isDragging.current = true;
+
+    // 1. Hide the overlay so all future events go directly to the canvas
+    if (overlayRef.current) overlayRef.current.style.pointerEvents = 'none';
+
+    // 2. Enable pointer-events on the canvas via the CSS class
+    containerRef.current?.classList.add('dragging');
+
+    // 3. Forward this initial pointerdown to the canvas so Spline starts orbiting.
+    //    rAF ensures the pointer-events CSS changes have painted first.
+    requestAnimationFrame(() => {
+      const canvas = containerRef.current?.querySelector('canvas');
+      if (canvas) {
+        canvas.dispatchEvent(new PointerEvent('pointerdown', {
+          clientX: e.clientX,
+          clientY: e.clientY,
+          button: 0,
+          bubbles: true,
+          cancelable: true,
+          pointerId: e.pointerId || 1,
+        }));
+      }
+    });
+  };
+
+  const stopDrag = () => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+
+    // Restore the overlay so scroll works again
+    if (overlayRef.current) overlayRef.current.style.pointerEvents = '';
+    containerRef.current?.classList.remove('dragging');
+  };
+
+  useEffect(() => {
+    window.addEventListener('pointerup', stopDrag);
+    return () => window.removeEventListener('pointerup', stopDrag);
+  }, []);
+
   return (
     <div
       ref={containerRef}
-      className="spline-lock w-full h-full max-w-[700px] max-h-[700px] relative overflow-hidden cursor-grab active:cursor-grabbing"
-      style={{
-        touchAction: 'none', // blocks pinch zoom on mobile too
-        userSelect: 'none',
-      }}
-      onMouseDown={e => { if (e.button !== 0) e.preventDefault(); }}
-      onPointerDown={e => { if (e.button !== 0) e.preventDefault(); }}
+      className="spline-lock w-full h-full max-w-[700px] max-h-[700px] relative overflow-hidden"
+      style={{ userSelect: 'none' }}
     >
       {!splineLoaded && !splineError && <SplineShimmer />}
       {splineError && <SplineFallback />}
@@ -119,12 +163,33 @@ const SplineGlobeContainer = ({ splineLoaded, splineError, setSplineLoaded, setS
             opacity: splineLoaded ? 1 : 0,
             transition: 'opacity 0.6s ease-in-out',
             aspectRatio: '1/1',
-            pointerEvents: 'auto',
           }}
           onLoad={handleSplineLoad}
           onError={() => setSplineError(true)}
         />
       )}
+
+      {/* Transparent overlay: lets scroll pass through, forwards drag to Spline */}
+      <div
+        ref={overlayRef}
+        className="cursor-grab active:cursor-grabbing"
+        style={{
+          position: 'absolute', inset: 0, zIndex: 5,
+          touchAction: 'pan-y',
+        }}
+        onPointerDown={startDrag}
+      />
+
+      {/* Ctrl/Cmd + Scroll Hint Overlay */}
+      <div 
+        className={`absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-none transition-opacity duration-300 ${showZoomHint ? 'opacity-100' : 'opacity-0'}`}
+      >
+        <div className="px-6 py-3 rounded-2xl border border-purple-500/40 bg-purple-900/30">
+          <p className="text-sm font-semibold tracking-wider text-purple-200 uppercase">
+            Use <kbd className="font-sans px-2 py-1 mx-1 bg-black/50 rounded-md border border-purple-500/30 text-white">⌘ Cmd</kbd> or <kbd className="font-sans px-2 py-1 mx-1 bg-black/50 rounded-md border border-purple-500/30 text-white">Ctrl</kbd> + Scroll to zoom
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
@@ -218,7 +283,7 @@ const VaultSection = React.forwardRef(({
           </div>
         </motion.div>
 
-        <div className="lg:w-3/5 h-[500px] md:h-[650px] w-full relative flex items-center justify-center">
+        <div className="lg:w-3/5 h-[500px] md:h-[650px] w-full relative flex items-center justify-center border border-purple-900/30 rounded-[2rem] bg-black/20 overflow-hidden" style={{ boxShadow: 'inset 0 0 40px rgba(192,26,243,0.05)' }}>
           <SplineGlobeContainer
             splineLoaded={splineLoaded}
             splineError={splineError}
@@ -228,9 +293,9 @@ const VaultSection = React.forwardRef(({
 
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-600/10 blur-[120px] rounded-full -z-10" aria-hidden="true" />
 
-          <div className="absolute bottom-0 right-0 p-4 border-l border-t border-purple-900/30 rounded-tl-2xl bg-black/40 backdrop-blur-md" role="region" aria-label="Spline interface information">
-            <p className="text-[9px] uppercase tracking-[0.3em] text-purple-400/60 font-bold">
-              Interactive Vault • Rotate to Explore
+          <div className="absolute bottom-0 right-0 p-4 border-l border-t border-purple-900/30 rounded-tl-2xl bg-black/60 backdrop-blur-md z-10 pointer-events-none" role="region" aria-label="Spline interface information">
+            <p className="text-[9px] uppercase tracking-[0.3em] text-purple-400/80 font-bold">
+              Interactive Vault • Drag to Rotate
             </p>
           </div>
         </div>
