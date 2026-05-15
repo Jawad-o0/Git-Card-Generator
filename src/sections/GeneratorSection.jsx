@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, Download, Eye, EyeOff, Star, Users, Folder,
@@ -207,8 +208,6 @@ const GeneratorSection = React.forwardRef(({
   setBgStyle,
   colorShade,
   setColorShade,
-  blurEffect,
-  setBlurEffect,
   customMessage,
   setCustomMessage,
   currentTheme,
@@ -231,6 +230,7 @@ const GeneratorSection = React.forwardRef(({
   const [exportAction, setExportAction] = useState('');
   const [copySuccess, setCopySuccess] = useState('');
   const [isCapturing, setIsCapturing] = useState(false);
+  const [blurEffect, setBlurEffect] = useState('none');
 
   // Track which expandable panels are open
   const [expandedSections, setExpandedSections] = useState({
@@ -329,6 +329,7 @@ const GeneratorSection = React.forwardRef(({
 
   // ── render ────────────────────────────────────────────────────────────────
   return (
+    <>
     <motion.section
       ref={ref}
       id="tool"
@@ -691,6 +692,7 @@ const GeneratorSection = React.forwardRef(({
                     </p>
                   </div>
                 )}
+
               </div>
 
               {/* Export buttons */}
@@ -970,6 +972,124 @@ const GeneratorSection = React.forwardRef(({
         )}
       </motion.div>
     </motion.section>
+
+      {loading && createPortal(
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(0,0,0,0.75)',
+          }}
+          aria-live="polite"
+          role="status"
+        >
+          <style>{`
+            @keyframes scanv {
+              0%   { top: -8%; }
+              100% { top: 108%; }
+            }
+            @keyframes skele-pulse {
+              0%, 100% { opacity: 0.25; }
+              50%      { opacity: 0.45; }
+            }
+            .scan-overlay-line {
+              position: absolute; left: 0; width: 100%; height: 2px;
+              background: #c01af3;
+              box-shadow: 0 0 12px 2px rgba(192,26,243,0.7), 0 0 28px 4px rgba(228,78,255,0.35);
+              animation: scanv 2.4s ease-in-out infinite;
+            }
+            .scan-overlay-beam {
+              position: absolute; left: 0; width: 100%; height: 100px;
+              background: linear-gradient(to bottom, transparent 0%, rgba(192,26,243,0.12) 40%, rgba(228,78,255,0.22) 100%);
+              animation: scanv 2.4s ease-in-out infinite;
+            }
+            .skel-block {
+              border-radius: 8px;
+              background: rgba(192,26,243,0.12);
+              animation: skele-pulse 2s ease-in-out infinite;
+            }
+          `}</style>
+
+          <div style={{
+            position: 'relative', width: 340, maxWidth: '90vw',
+            aspectRatio: '5/7',
+            borderRadius: '1.5rem', overflow: 'hidden',
+            border: '1px solid rgba(192,26,243,0.25)',
+            background: 'linear-gradient(160deg, #08010f 0%, #0d0318 50%, #08010f 100%)',
+            boxShadow: '0 0 60px rgba(192,26,243,0.12), inset 0 0 0 1px rgba(192,26,243,0.08)',
+            display: 'flex', flexDirection: 'column',
+            padding: '28px 24px', gap: 16,
+          }}>
+            <div className="scan-overlay-line" />
+            <div className="scan-overlay-beam" />
+
+            {/* Skeleton avatar + name */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div className="skel-block" style={{ width: 52, height: 52, borderRadius: '50%', flexShrink: 0 }} />
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div className="skel-block" style={{ width: '70%', height: 14 }} />
+                <div className="skel-block" style={{ width: '45%', height: 10 }} />
+              </div>
+            </div>
+
+            {/* Skeleton tagline */}
+            <div className="skel-block" style={{ width: '85%', height: 10, marginTop: 4 }} />
+
+            {/* Skeleton stats row */}
+            <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
+              <div className="skel-block" style={{ flex: 1, height: 40, borderRadius: 10 }} />
+              <div className="skel-block" style={{ flex: 1, height: 40, borderRadius: 10 }} />
+              <div className="skel-block" style={{ flex: 1, height: 40, borderRadius: 10 }} />
+            </div>
+
+            {/* Skeleton language bars */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+              <div className="skel-block" style={{ width: '90%', height: 8 }} />
+              <div className="skel-block" style={{ width: '60%', height: 8 }} />
+              <div className="skel-block" style={{ width: '75%', height: 8 }} />
+            </div>
+
+            {/* Skeleton body lines */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 'auto' }}>
+              <div className="skel-block" style={{ width: '100%', height: 10 }} />
+              <div className="skel-block" style={{ width: '80%', height: 10 }} />
+              <div className="skel-block" style={{ width: '55%', height: 10 }} />
+            </div>
+
+            {/* Center label */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center',
+              zIndex: 20, pointerEvents: 'none',
+            }}>
+              <Loader2
+                className="animate-spin"
+                style={{ width: 32, height: 32, color: '#c01af3', marginBottom: 12 }}
+                aria-hidden="true"
+              />
+              <p style={{
+                fontFamily: "'Orbitron', sans-serif",
+                fontSize: 11, fontWeight: 700,
+                letterSpacing: '0.3em', textTransform: 'uppercase',
+                color: '#c084fc',
+              }}>
+                Scanning Profile…
+              </p>
+              <p style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 11, color: 'rgba(200,180,230,0.5)',
+                marginTop: 6, letterSpacing: '0.05em',
+              }}>
+                Fetching repos, events & orgs
+              </p>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+    </>
   );
 });
 
