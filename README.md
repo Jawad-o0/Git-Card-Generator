@@ -6,9 +6,9 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Live-6B21A8?style=for-the-badge&labelColor=0a0a0f" />
-  <img src="https://img.shields.io/badge/React-18-6B21A8?style=for-the-badge&logo=react&logoColor=white&labelColor=0a0a0f" />
+  <img src="https://img.shields.io/badge/React-19-6B21A8?style=for-the-badge&logo=react&logoColor=white&labelColor=0a0a0f" />
   <img src="https://img.shields.io/badge/Vite-Latest-6B21A8?style=for-the-badge&logo=vite&logoColor=white&labelColor=0a0a0f" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-3-6B21A8?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=0a0a0f" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-6B21A8?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=0a0a0f" />
   <img src="https://img.shields.io/badge/Framer_Motion-Latest-6B21A8?style=for-the-badge&logo=framer&logoColor=white&labelColor=0a0a0f" />
 </p>
 
@@ -31,36 +31,95 @@
 
 **Git-Card Studio** is an ultra-premium web application that dynamically transforms raw GitHub data into personalized **Developer Identity Cards**. It serves as a visual resume and statement piece for engineers to showcase their coding personas, dominant languages, and open-source impact — with the aesthetic rigor of a world-class product launch.
 
-The application discards standard flat web design in favor of an aggressive **cyber-premium aesthetic** — matte blacks, deep purples, and sophisticated glassmorphism layered with cinematic motion.
+This is not a stat tracker. It is a **Persona Engine** — merging data, design, and narrative into a shareable artifact that speaks to your strengths before anyone even clicks your profile.
+
+The application discards standard flat web design in favor of an aggressive **cyber-premium aesthetic** — matte blacks, deep purples, sophisticated glassmorphism, and cinematic motion at every layer.
 
 ---
 
-## ◈ Features
+## ◈ The Vision
 
-### ▸ Visual Identity & Aesthetic Engineering
+### ▸ Persona Intelligence
+Machine-assisted heuristics analyze your repositories, languages, stars, and commit history to determine your developer archetype. The engine computes intelligent snapshots, categorizing your expertise and generating narrative-driven achievement badges dynamically based on weighted thresholds.
 
-- **Cinematic UI** — Ambient aurora gradients, radial glows, and rotating shimmer borders throughout
-- **Metallic Typography** — Custom `@keyframes` create a living metallic sheen that breathes across headings
-- **Micro-Interactions** — Light-sweep shimmers on all interactive elements, powered by Framer Motion hover states
-- **Glassmorphic Layering** — Heavy `backdrop-blur` over low-opacity dark backgrounds for physical depth
-- **Interactive 3D Globe** — Spline-powered vault universe with rotation-only controls and zoom lock
+### ▸ Design Engineered
+Every gradient, highlight, blur, and typography choice is meticulously tuned. Whether viewed on a high-res retina display or exported for social media, the card maintains absolute visual fidelity — featuring real-time CSS shaders, dynamic glow effects, and interactive parallax tilt physics.
+
+### ▸ Instant Deployment
+Export high-resolution PNGs directly to your clipboard, share natively to your OS, or broadcast your new persona across X (Twitter), LinkedIn, and investor decks with one click.
 
 ---
 
-### ▸ Heuristic Analysis Engine
+## ◈ Core Features
 
-The core algorithm doesn't just read data — it **interprets** it.
+### ▸ Interactive Vault Universe
+A fully rendered 3D Spline scene that reacts to your presence in real-time. Step inside the holographic vault where prestige Git identities are forged. Rotation-only controls with zoom lock for a frictionless scroll experience.
+
+### ▸ The Fabrication Lab
 
 | Feature | Description |
 |---|---|
-| **Algorithmic Profiling** | Assigns dynamic titles like `Architect`, `Luminary`, `Polyglot` from weighted GitHub metrics |
-| **Language Detection** | Calculates exact language bytes across repos to determine primary tech stack |
-| **Badge Generation** | Awards stylized badges (`Pioneer`, `Titan`, `Founding Member`) based on heuristic thresholds |
-| **Account Intelligence** | Tracks longevity, star trajectory, and follower authority score |
+| **Identity Lookup Protocol** | Input any GitHub username to instantly pull live data |
+| **API Override Protocol** | PAT support — bypass 30 req/hr limit, unlock 5,000 req/hr |
+| **Chromium Spectrum** | Platinum, Obsidian, Royal Burgundy, Slate, Synthwave, Terminal, Aurora, Gold Foil |
+| **Aesthetic Overlays** | 9 curated art backgrounds or paste any custom image URL |
+| **Substrate Refraction** | Multi-level backdrop blur controls via CSS backdrop-filters |
+| **Manifesto** | 60-character custom tagline injected directly onto the card |
+| **Reflective Index** | Fine-tune brightness and luster with a precision slider |
+
+### ▸ Heuristic Analysis Engine
+
+| Feature | Description |
+|---|---|
+| **Algorithmic Profiling** | Dynamic archetypes — `Architect`, `Luminary`, `Polyglot`, `Veteran`, `Rising Star` |
+| **Language Detection** | Exact byte-level language calculation across all repos |
+| **Badge Generation** | `Pioneer`, `Titan`, `Founding Member`, `Elite` — awarded by heuristic thresholds |
+| **Account Intelligence** | Longevity tracking, star trajectory, follower authority scoring |
+| **Activity Pulse** | 30-day event mix — Pushes, PRs, Reviews, peak activity days |
 
 ---
 
-### ▸ Intelligent API Architecture
+## ◈ UX Engineering — Solved Problems
+
+### ▸ The 3D Scroll-Trap Problem
+
+**Problem** — Embedding a Spline canvas hijacks the mouse wheel, zooming into the globe instead of scrolling the page.
+
+**Solution** — A custom event interception layer was engineered:
+```
+Normal scroll  →  bypasses the 3D scene entirely
+Drag gesture   →  transparent overlay forwards pointer events for rotation
+Wheel event    →  blocked at capture phase before reaching Spline internals
+Camera zoom    →  locked via minDistance = maxDistance on load
+```
+
+### ▸ High-Fidelity Canvas Export
+
+**Problem** — `html2canvas` is notoriously buggy with flexbox alignment and custom web fonts, causing text to baseline-shift or render in system fallback fonts on export.
+
+**Solution:**
+```
+Font pre-loading  →  Orbitron embedded into capture context before html2canvas fires
+Tilt freeze       →  react-parallax-tilt disabled (isFrozen prop) before capture
+Animation freeze  →  capture-freeze class kills all @keyframes during snapshot
+Timing delay      →  200ms settle window after freeze before canvas render fires
+```
+
+### ▸ Graceful Degradation
+
+**Problem** — Heavy animations, blurs, and 3D scenes cause framerate drops on low-end hardware.
+
+**Solution** — `useMobileDetect` + hardware concurrency check (`isLowEnd`):
+```
+Low-end detected  →  aurora effects + starfield particles disabled
+Reduced motion    →  spring physics snap to instant transitions
+Mobile viewport   →  backdrop blurs fallback to solid semi-transparent overlays
+Spline on mobile  →  beam count and complexity scaled down automatically
+```
+
+---
+
+## ◈ Intelligent API Architecture
 
 Dual-tier fallback system to bypass GitHub's unauthenticated rate limits:
 
@@ -78,7 +137,7 @@ Power User Mode (PAT Override)
 
 ---
 
-### ▸ Export Pipeline
+## ◈ Export Pipeline
 
 | Export Type | Description |
 |---|---|
@@ -89,24 +148,13 @@ Power User Mode (PAT Override)
 
 ---
 
-### ▸ Card Customization
-
-- **8 Chromium Themes** — Platinum, Obsidian, Royal Burgundy, Slate, Synthwave, Terminal, Aurora, Gold Foil
-- **9 Art Overlays** — Steel Serpent, Liquid Glass, Royal Baroque, The Operator, Cosmic Drifter, and more
-- **Reflective Index Slider** — Fine-tune brightness and luster
-- **Substrate Refraction** — 4-level backdrop blur control
-- **Custom Manifesto** — 60-character personal tagline on the card
-- **Custom Artwork URL** — Paste any direct image URL as card art
-
----
-
 ## ◈ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Core** | React 18 + Vite |
-| **Styling** | Tailwind CSS v3 |
-| **Animation** | Framer Motion |
+| **Core** | React 19 + Vite |
+| **Styling** | Tailwind CSS v4 + Vanilla CSS keyframes |
+| **Animation** | Framer Motion — spring physics, scroll-linked, stagger reveals |
 | **3D** | Spline (`@splinetool/react-spline`) |
 | **Card Tilt** | `react-parallax-tilt` |
 | **Export** | `html2canvas` |
@@ -137,12 +185,11 @@ npm install
 npm run dev
 ```
 
-The app will be running at `http://localhost:5173`
-
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
+npm run preview
 ```
 
 ---
@@ -205,6 +252,9 @@ This project is open source and available under the [MIT License](LICENSE).
 </a>
 <a href="https://www.linkedin.com/in/jawad-ali-677aa6346">
   <img src="https://img.shields.io/badge/LinkedIn-Jawad_Ali-6B21A8?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0a0a0f" />
+</a>
+<a href="mailto:Jawadaliii986@gmail.com">
+  <img src="https://img.shields.io/badge/Email-Contact-6B21A8?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0a0a0f" />
 </a>
 
 <br/><br/>
