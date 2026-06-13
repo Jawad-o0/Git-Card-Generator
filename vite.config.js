@@ -41,6 +41,9 @@ export default defineConfig({
       }
     },
     chunkSizeWarningLimit: 1200,
+    cssCodeSplit: true,
+    sourcemap: false,
+    reportCompressed: true,
   },
   server: {
     preTransformRequests: true,
