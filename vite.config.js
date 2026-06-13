@@ -16,17 +16,27 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks: (id) => {
           // Separate Three.js and related 3D libraries into their own chunk
-          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei', '@paper-design/shaders'],
+          if (id.includes('three') || id.includes('@react-three') || id.includes('@paper-design')) {
+            return 'three-vendor'
+          }
           // Separate Spline into its own chunk (large library)
-          'spline': ['@splinetool/react-spline'],
+          if (id.includes('@splinetool')) {
+            return 'spline'
+          }
           // Separate animation/motion libraries
-          'motion': ['framer-motion', 'react-confetti'],
+          if (id.includes('framer-motion') || id.includes('react-confetti')) {
+            return 'motion'
+          }
           // Separate canvas rendering
-          'canvas': ['html2canvas'],
+          if (id.includes('html2canvas')) {
+            return 'canvas'
+          }
           // Separate QR code
-          'qr': ['qrcode.react'],
+          if (id.includes('qrcode.react')) {
+            return 'qr'
+          }
         }
       }
     },
