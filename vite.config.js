@@ -41,12 +41,6 @@ export default defineConfig({
       }
     },
     chunkSizeWarningLimit: 1200,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: false,
-      },
-    },
   },
   server: {
     preTransformRequests: true,
