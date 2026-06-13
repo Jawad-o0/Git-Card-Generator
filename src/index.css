@@ -130,6 +130,7 @@
   color: #A020F0;
 }
 
+/* Optimized: Reduced animation duration and removed loop on non-hover */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -151,7 +152,7 @@
 }
 
 .animate-shimmer {
-  animation: shimmer 3s infinite linear;
+  animation: shimmer 4s ease-in-out;
 }
 
 .animate-shine {
@@ -165,8 +166,8 @@
   box-shadow:
     0 18px 50px rgba(0, 0, 0, 0.65),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-tabs {
@@ -201,7 +202,7 @@
   cursor: pointer;
   user-select: none;
   transform: translateZ(0);
-  will-change: transform, filter;
+  will-change: transform;
   transition: transform 160ms ease, filter 160ms ease;
 }
 
@@ -230,7 +231,7 @@
   border-radius: 999px;
   z-index: 0;
 
-  /* This stack is the “liquid chrome” look: dark edges, bright steel bands, purple/cyan reflections */
+  /* This stack is the "liquid chrome" look: dark edges, bright steel bands, purple/cyan reflections */
   background-image:
     radial-gradient(120% 180% at 18% 120%, rgba(210, 130, 255, 0.55) 0%, rgba(210, 130, 255, 0.0) 58%),
     radial-gradient(120% 180% at 82% -30%, rgba(145, 225, 255, 0.55) 0%, rgba(145, 225, 255, 0.0) 55%),
@@ -245,11 +246,12 @@
       rgba(10, 10, 14, 1) 95%,
       rgba(8, 8, 12, 1) 100%);
   background-size: 220% 100%;
-  animation: lc-flow 7s ease-in-out infinite alternate;
+  animation: lc-flow 8s ease-in-out infinite alternate;
   filter: saturate(1.05) contrast(1.05);
+  will-change: background-position;
 }
 
-/* Inner rim + bevel (the “tube” edge) */
+/* Inner rim + bevel (the "tube" edge) */
 .lc-btn__rim {
   position: absolute;
   inset: 0;
@@ -261,6 +263,7 @@
     inset 0 -3px 4px rgba(0, 0, 0, 0.85),
     inset 3px 0 4px rgba(255, 255, 255, 0.55),
     inset -3px 0 4px rgba(0, 0, 0, 0.65);
+  pointer-events: none;
 }
 
 /* Top gloss strip */
@@ -372,5 +375,16 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-shell {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .lc-btn__bg {
+    animation: none;
   }
 }
