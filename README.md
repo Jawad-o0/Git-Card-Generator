@@ -5,6 +5,9 @@
 </h1>
 
 <p align="center">
+  <a href="https://git-card-generator.vercel.app/">
+    <img src="https://img.shields.io/badge/⬢_Launch-Live_Studio-6B21A8?style=for-the-badge&labelColor=0a0a0f" alt="Live Demo" />
+  </a>
   <img src="https://img.shields.io/badge/Status-Live-6B21A8?style=for-the-badge&labelColor=0a0a0f" />
   <img src="https://img.shields.io/badge/React-19-6B21A8?style=for-the-badge&logo=react&logoColor=white&labelColor=0a0a0f" />
   <img src="https://img.shields.io/badge/Vite-Latest-6B21A8?style=for-the-badge&logo=vite&logoColor=white&labelColor=0a0a0f" />
