@@ -17,28 +17,22 @@
 
 <p align="center">
   <a href="https://git-card-generator.vercel.app/" target="_blank">
-    <img src="https://img.shields.io/badge/⚡_LIVE_ENGINE-ENTER_STUDIO_⤞-A855F7?style=for-the-badge&logo=vercel&logoColor=white&labelColor=030307" alt="Live Demo" />
+    <img src="https://img.shields.io/badge/%E2%97%86_SYSTEM-OPERATIONAL-00FF66?style=for-the-badge&labelColor=0a0a0f" alt="System Status" /></a><a href="https://git-card-generator.vercel.app/" target="_blank"><img src="https://img.shields.io/badge/CORE_ENGINE-ACCESS_STUDIO_%E2%A4%9E-A855F7?style=for-the-badge&logo=vercel&logoColor=white&labelColor=120224" alt="Launch Engine" />
   </a>
 </p>
 
 <p align="center">
-  <strong>Prestige Engineering Identity Studio</strong><br/>
-  <sub>Transform raw GitHub data into stunning, high-fidelity Developer Identity Cards.</sub>
+  <b>⬢ PRESTIGE ENGINEERING IDENTITY SYSTEMS ⬢</b><br/>
+  <sub>Deconstruct raw GitHub telemetry. Synthesize high-fidelity developer signatures.</sub>
 </p>
 
 <br/>
 
-> *"We don't just show stats — we frame your legacy."*
+> *"We don't just compile metrics. We frame your legacy into an uncompromised visual artifact."*
 
 <br/>
 
-### **[⬢ Access the Live Studio Here ⬢](https://git-card-generator.vercel.app/)**
-
-<br/>
-
-<br/>
-
-> *"We don't just show stats — we frame your legacy."*
+### **[  EXECUTE PROTOCOL: ENTER THE FABRICATION LAB ⤞ ](https://git-card-generator.vercel.app/)**
 
 <br/>
 
