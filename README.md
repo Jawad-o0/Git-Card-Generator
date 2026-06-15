@@ -16,9 +16,25 @@
 </p>
 
 <p align="center">
+  <a href="https://git-card-generator.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/⚡_LIVE_ENGINE-ENTER_STUDIO_⤞-A855F7?style=for-the-badge&logo=vercel&logoColor=white&labelColor=030307" alt="Live Demo" />
+  </a>
+</p>
+
+<p align="center">
   <strong>Prestige Engineering Identity Studio</strong><br/>
   <sub>Transform raw GitHub data into stunning, high-fidelity Developer Identity Cards.</sub>
 </p>
+
+<br/>
+
+> *"We don't just show stats — we frame your legacy."*
+
+<br/>
+
+### **[⬢ Access the Live Studio Here ⬢](https://git-card-generator.vercel.app/)**
+
+<br/>
 
 <br/>
 
