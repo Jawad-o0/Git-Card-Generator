@@ -30,11 +30,11 @@
 
 > *"We don't just compile metrics. We frame your legacy into an uncompromised visual artifact."*
 
-<br/>
-
-### **[  EXECUTE PROTOCOL: ENTER THE FABRICATION LAB ⤞ ](https://git-card-generator.vercel.app/)**
-
-<br/>
+<p align="center">
+  <a href="https://git-card-generator.vercel.app/" target="_blank">
+    <b><code>[ ⚡ RUN OVERRIDE : ACCESS THE FABRICATION LAB ⤞ ]</code></b>
+  </a>
+</p>
 
 </div>
 
